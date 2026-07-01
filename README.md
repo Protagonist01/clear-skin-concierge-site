@@ -1,23 +1,70 @@
-# Clear Skin Concierge Site
+<div align="center">
 
-Clear Skin is a Next.js clinic-commerce demo for a premium skincare brand. It combines a marketing website, treatment and product catalogue, booking and checkout flows, customer account access, email workflows, and a site-aware AI concierge.
+# Clear Skin
 
-This repository is intended as a documentation and portfolio snapshot of the `lume-site` app. It is not configured for GitHub Pages because the app depends on Next.js server routes, local data storage, and server-side AI/email integrations.
+**AI-driven clinic commerce · Next.js 14 · TypeScript**
 
-## Table Of Contents
+A production-grade marketing, commerce, and AI concierge experience for a premium skincare clinic brand.
 
-- [What This Project Demonstrates](#what-this-project-demonstrates)
+<br />
+
+<img src="https://img.shields.io/badge/Next.js_14-000?style=flat-square&logo=nextdotjs&logoColor=fff" alt="Next.js" />
+<img src="https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=000" alt="React" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=fff" alt="TypeScript" />
+<img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=fff" alt="Tailwind" />
+<img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=fff" alt="SQLite" />
+<img src="https://img.shields.io/badge/OpenRouter-7C3AED?style=flat-square" alt="OpenRouter" />
+<img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=fff" alt="Framer Motion" />
+
+</div>
+
+<br />
+
+> This repository is a documentation and portfolio snapshot of the `lume-site` application. It is not configured for GitHub Pages because the app depends on Next.js server routes, local data storage, and server-side AI/email integrations.
+
+---
+
+## Table of Contents
+
 - [Screenshots](#screenshots)
+- [What This Project Demonstrates](#what-this-project-demonstrates)
 - [Architecture](#architecture)
 - [AI Concierge Design](#ai-concierge-design)
-- [Routes And Modules](#routes-and-modules)
-- [Data And Persistence](#data-and-persistence)
+- [Routes and Modules](#routes-and-modules)
+- [Data and Persistence](#data-and-persistence)
 - [Environment Variables](#environment-variables)
 - [Local Development](#local-development)
-- [Testing And Verification](#testing-and-verification)
+- [Testing and Verification](#testing-and-verification)
 - [Deployment Notes](#deployment-notes)
 - [Repository Hygiene](#repository-hygiene)
 - [Further Documentation](#further-documentation)
+
+---
+
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center"><strong>Treatment catalogue with concierge overlay</strong></td>
+    <td align="center"><strong>Treatment detail page with product card actions</strong></td>
+  </tr>
+  <tr>
+    <td><img src="public/images/screenshots/treatments-chatbot.png" width="480" alt="Treatment catalogue with AI concierge" /></td>
+    <td><img src="public/images/screenshots/skin-analysis.png" width="480" alt="Treatment detail with product action card" /></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>AI concierge on a treatment page</strong></td>
+    <td align="center"><strong>Cart with concierge add-to-bag interaction</strong></td>
+  </tr>
+  <tr>
+    <td><img src="public/images/screenshots/chatbot-mobile.png" width="480" alt="AI concierge chat on treatment page" /></td>
+    <td><img src="public/images/screenshots/cart-ai.png" width="480" alt="Cart with AI concierge add-to-bag" /></td>
+  </tr>
+</table>
+
+> Additional screenshots are in [`public/images/screenshots`](public/images/screenshots).
+
+---
 
 ## What This Project Demonstrates
 
@@ -36,28 +83,7 @@ Clear Skin is built around a realistic clinic and skincare commerce journey:
 
 The main technical idea is the concierge: it is not just a text box over a static site. It returns typed decisions that the frontend can use to navigate, show products, show treatments, open a quiz, propose cart changes, or start a booking handoff.
 
-## Screenshots
-
-<table>
-  <tr>
-    <td align="center"><strong>Concierge chat on mobile</strong></td>
-    <td align="center"><strong>Skin analysis result</strong></td>
-  </tr>
-  <tr>
-    <td><img src="public/images/screenshots/chatbot-mobile.png" width="380" alt="AI concierge chat on mobile" /></td>
-    <td><img src="public/images/screenshots/skin-analysis-ai.png" width="380" alt="AI skin analysis result" /></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Cart upsell rationale</strong></td>
-    <td align="center"><strong>Checkout and booking flow</strong></td>
-  </tr>
-  <tr>
-    <td><img src="public/images/screenshots/cart-ai.png" width="380" alt="AI-powered cart upsell" /></td>
-    <td><img src="public/images/screenshots/cart-checkout.png" width="380" alt="Checkout and booking flow" /></td>
-  </tr>
-</table>
-
-Additional screenshots live in [public/images/screenshots](public/images/screenshots).
+---
 
 ## Architecture
 
@@ -84,18 +110,23 @@ flowchart TD
   Tools --> Db
 ```
 
-At a high level:
+**Directory layout at a glance:**
 
-- `app/` contains pages and route handlers.
-- `components/` contains layout, UI primitives, and feature modules.
-- `data/` contains static product, team, and treatment catalogues.
-- `lib/` contains business logic, persistence, AI adapters, concierge routing, and scheduling.
-- `public/` contains imagery, video, and README screenshots.
-- `docs/` contains deeper design reviews, QA notes, runbooks, and concierge architecture notes.
+| Directory | Purpose |
+| --- | --- |
+| `app/` | Pages and route handlers |
+| `components/` | Layout, UI primitives, and feature modules |
+| `data/` | Static product, team, and treatment catalogues |
+| `lib/` | Business logic, persistence, AI adapters, concierge routing, and scheduling |
+| `lib/concierge/` | Deterministic router, model agent, tools, RAG, cost controls, semantic cache |
+| `public/` | Imagery, video, and README screenshots |
+| `docs/` | Design reviews, QA notes, runbooks, and concierge architecture notes |
+
+---
 
 ## AI Concierge Design
 
-The concierge lives mainly in [components/modules/Concierge.tsx](components/modules/Concierge.tsx), [app/api/chat/route.ts](app/api/chat/route.ts), and [lib/concierge](lib/concierge).
+The concierge lives mainly in [`components/modules/Concierge.tsx`](components/modules/Concierge.tsx), [`app/api/chat/route.ts`](app/api/chat/route.ts), and [`lib/concierge/`](lib/concierge).
 
 ### Request Flow
 
@@ -129,15 +160,15 @@ sequenceDiagram
 
 ### Decision Types
 
-The concierge response type is defined in [lib/concierge/types.ts](lib/concierge/types.ts). It includes:
+The concierge response type is defined in [`lib/concierge/types.ts`](lib/concierge/types.ts). It includes:
 
-- `mode`: `direct_action`, `advisory_chat`, `guided_workflow`, or `clarification_needed`.
-- `reply`: the assistant-facing answer shown in the chat.
-- `action`: an optional typed action the frontend can execute or ask the user to confirm.
-- `suggestions`: follow-up prompts grouped as question, navigation, cart, booking, or education.
-- `safetyNotes`: deterministic notes for sensitive or constrained requests.
+- `mode` — `direct_action`, `advisory_chat`, `guided_workflow`, or `clarification_needed`.
+- `reply` — the assistant-facing answer shown in the chat.
+- `action` — an optional typed action the frontend can execute or ask the user to confirm.
+- `suggestions` — follow-up prompts grouped as question, navigation, cart, booking, or education.
+- `safetyNotes` — deterministic notes for sensitive or constrained requests.
 
-Supported actions:
+### Supported Actions
 
 | Action | Purpose | Confirmation |
 | --- | --- | --- |
@@ -149,7 +180,7 @@ Supported actions:
 | `start_booking` | Start an in-chat booking handoff for a treatment or consultation | Yes |
 | `open_quiz` | Open the skin quiz in product or treatment mode | No |
 
-### Safety And Control Layers
+### Safety and Control Layers
 
 The concierge is intentionally layered so common or risky operations do not depend on a free-form LLM response:
 
@@ -164,7 +195,7 @@ The concierge is intentionally layered so common or risky operations do not depe
 
 ### Tool Registry
 
-[lib/concierge/tools.ts](lib/concierge/tools.ts) exposes the model-facing tools:
+[`lib/concierge/tools.ts`](lib/concierge/tools.ts) exposes the model-facing tools:
 
 | Tool | Responsibility |
 | --- | --- |
@@ -177,7 +208,9 @@ The concierge is intentionally layered so common or risky operations do not depe
 | `propose_booking_handoff` | Build a confirmation-required booking action |
 | `propose_navigation` | Build a safe navigation action to a known destination |
 
-## Routes And Modules
+---
+
+## Routes and Modules
 
 ### Pages
 
@@ -214,27 +247,28 @@ The concierge is intentionally layered so common or risky operations do not depe
 | `POST /api/account/verify-code` | Verify login code and create account session |
 | `POST /api/account/logout` | Clear account session |
 
-### Important Components
+### Key Components
 
 | File | Role |
 | --- | --- |
-| [components/layout/Nav.tsx](components/layout/Nav.tsx) | Global navigation and cart/account entry points |
-| [components/layout/Footer.tsx](components/layout/Footer.tsx) | Footer and supporting links |
-| [components/modules/Concierge.tsx](components/modules/Concierge.tsx) | Client concierge widget and action executor |
-| [components/modules/SkinQuiz.tsx](components/modules/SkinQuiz.tsx) | Skin quiz UI and result rendering |
-| [components/modules/BookingEngine.tsx](components/modules/BookingEngine.tsx) | Booking UI and schedule slot interaction |
-| [components/modules/AccountAccessPanel.tsx](components/modules/AccountAccessPanel.tsx) | Email code login and account access |
-| [components/modules/ReviewEngine.tsx](components/modules/ReviewEngine.tsx) | Review submission and display |
-| [components/modules/UpsellEngine.tsx](components/modules/UpsellEngine.tsx) | Checkout/product recommendation rationale |
-| [components/ui/Button.tsx](components/ui/Button.tsx) | Shared button primitive |
-| [components/ui/ProductCard.tsx](components/ui/ProductCard.tsx) | Product display card |
-| [components/ui/TreatmentCard.tsx](components/ui/TreatmentCard.tsx) | Treatment display card |
+| [`Nav.tsx`](components/layout/Nav.tsx) | Global navigation and cart/account entry points |
+| [`Footer.tsx`](components/layout/Footer.tsx) | Footer and supporting links |
+| [`Concierge.tsx`](components/modules/Concierge.tsx) | Client concierge widget and action executor |
+| [`SkinQuiz.tsx`](components/modules/SkinQuiz.tsx) | Skin quiz UI and result rendering |
+| [`BookingEngine.tsx`](components/modules/BookingEngine.tsx) | Booking UI and schedule slot interaction |
+| [`AccountAccessPanel.tsx`](components/modules/AccountAccessPanel.tsx) | Email code login and account access |
+| [`ReviewEngine.tsx`](components/modules/ReviewEngine.tsx) | Review submission and display |
+| [`UpsellEngine.tsx`](components/modules/UpsellEngine.tsx) | Checkout/product recommendation rationale |
+| [`EmailCapture.tsx`](components/modules/EmailCapture.tsx) | Email lead capture and nurture opt-in |
+| [`EmailFlowDemo.tsx`](components/modules/EmailFlowDemo.tsx) | Transactional email flow demonstration |
 
-## Data And Persistence
+---
+
+## Data and Persistence
 
 The default data store is SQLite through `better-sqlite3`. The database path defaults to `data/clear-skin.sqlite`, or to `CLEAR_SKIN_DB_PATH` when provided.
 
-[lib/db.ts](lib/db.ts) creates these tables on startup:
+[`lib/db.ts`](lib/db.ts) creates these tables on startup:
 
 | Table | Stores |
 | --- | --- |
@@ -249,15 +283,17 @@ The default data store is SQLite through `better-sqlite3`. The database path def
 
 The static catalogues are stored separately:
 
-- [data/products.ts](data/products.ts)
-- [data/treatments.ts](data/treatments.ts)
-- [data/team.ts](data/team.ts)
+- [`data/products.ts`](data/products.ts)
+- [`data/treatments.ts`](data/treatments.ts)
+- [`data/team.ts`](data/team.ts)
 
-Operational note: the SQLite files are ignored by Git. The repository includes schema/bootstrap logic and catalogue source, not local customer/order data.
+> **Note:** SQLite files are ignored by Git. The repository includes schema/bootstrap logic and catalogue source, not local customer/order data.
+
+---
 
 ## Environment Variables
 
-Copy [.env.example](.env.example) to `.env.local`:
+Copy [`.env.example`](.env.example) to `.env.local`:
 
 ```bash
 cp .env.example .env.local
@@ -269,14 +305,14 @@ On Windows PowerShell:
 Copy-Item .env.example .env.local
 ```
 
-Core variables:
+### Core Variables
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `OPENROUTER_API_KEY` | For model-backed AI | Enables OpenRouter chat completions |
-| `OPENROUTER_MODEL` | Recommended | Selects the chat model, defaulting in code to `openai/gpt-4o-mini` |
+| `OPENROUTER_MODEL` | Recommended | Selects the chat model (defaults to `openai/gpt-4o-mini`) |
 | `OPENAI_API_KEY` | For embeddings/vector retrieval | Enables embeddings and semantic retrieval |
-| `OPENAI_EMBEDDING_MODEL` | Optional | Embedding model, defaulting to `text-embedding-3-small` |
+| `OPENAI_EMBEDDING_MODEL` | Optional | Embedding model (defaults to `text-embedding-3-small`) |
 | `PINECONE_API_KEY` | Optional | Enables Pinecone retrieval/cache |
 | `PINECONE_INDEX_HOST` | Optional | Pinecone index host |
 | `PINECONE_NAMESPACE` | Optional | Business knowledge namespace |
@@ -293,7 +329,7 @@ Core variables:
 | `CALENDLY_SCHEDULING_URL` | Optional | External Calendly handoff URL |
 | `CONCIERGE_DIAGNOSTICS_TOKEN` | Production diagnostics | Required to access diagnostics in production |
 
-Public variables:
+### Public Variables
 
 | Variable | Purpose |
 | --- | --- |
@@ -302,35 +338,21 @@ Public variables:
 | `NEXT_PUBLIC_LINKEDIN_URL` | LinkedIn link |
 | `NEXT_PUBLIC_CALENDLY_URL` | Public Calendly URL, if used |
 
+---
+
 ## Local Development
 
-Install dependencies:
-
 ```bash
+# Install dependencies
 npm install
-```
 
-Start the development server:
-
-```bash
+# Start the development server
 npm run dev
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-Build for production:
-
-```bash
-npm run build
-```
-
-Start the production build locally:
-
-```bash
-npm run start
-```
-
-Available scripts:
+### Available Scripts
 
 | Script | Purpose |
 | --- | --- |
@@ -340,7 +362,9 @@ Available scripts:
 | `npm run lint` | Run Next.js ESLint |
 | `npm run test:concierge:guardrails` | Run concierge guardrail checks against a local server |
 
-## Testing And Verification
+---
+
+## Testing and Verification
 
 Suggested verification sequence:
 
@@ -356,11 +380,13 @@ npm run start
 npm run test:concierge:guardrails
 ```
 
-Important notes:
+**Important notes:**
 
 - In production, `/api/concierge/diagnostics` returns `404` unless `CONCIERGE_DIAGNOSTICS_TOKEN` is configured and supplied by query string or `x-concierge-debug-token`.
 - The guardrail script checks diagnostics, retrieval readiness, recommendation safety, cart mutation confirmation, and booking safety.
 - If AI provider keys are absent, deterministic and lexical fallbacks still let much of the app run locally, but model-backed flows will be limited.
+
+---
 
 ## Deployment Notes
 
@@ -371,7 +397,7 @@ This project is not a static GitHub Pages site. It requires a Node-compatible Ne
 - SQLite access through `better-sqlite3`.
 - Cookie-based account/session behavior.
 
-For a real deployment, use a platform that supports the required runtime and storage model. Before production use:
+**Before production use:**
 
 - Set all required environment variables in the hosting provider.
 - Replace local SQLite with persistent storage, or ensure the deployment target has durable filesystem support.
@@ -382,6 +408,8 @@ For a real deployment, use a platform that supports the required runtime and sto
 - Confirm transactional email sender domains in Resend.
 - Decide whether Pinecone should be seeded automatically or through an explicit operational script.
 
+---
+
 ## Repository Hygiene
 
 The repository is configured to keep local-only data out of Git:
@@ -390,21 +418,27 @@ The repository is configured to keep local-only data out of Git:
 - `.next/`, `out/`, and build artifacts
 - `node_modules/`
 - SQLite files under `data/`
-- local logs and temporary scripts
+- Local logs and temporary scripts
 - TypeScript build info
 
-The committed `.env.example` uses placeholders only. Do not commit real API keys, local databases, customer records, or production logs.
+> The committed `.env.example` uses placeholders only. Do not commit real API keys, local databases, customer records, or production logs.
+
+---
 
 ## Further Documentation
 
 The `docs/` folder contains deeper implementation notes:
 
-- [docs/clear-skin-concierge-system-design-review.md](docs/clear-skin-concierge-system-design-review.md)
-- [docs/concierge-operator-blueprint.md](docs/concierge-operator-blueprint.md)
-- [docs/concierge-production-runbook.md](docs/concierge-production-runbook.md)
-- [docs/concierge-qa-report.md](docs/concierge-qa-report.md)
-- [docs/concierge-query-evaluation-2026-06-12.md](docs/concierge-query-evaluation-2026-06-12.md)
+| Document | Contents |
+| --- | --- |
+| [`clear-skin-concierge-system-design-review.md`](docs/clear-skin-concierge-system-design-review.md) | Full concierge architecture, interaction model, and provider design |
+| [`concierge-operator-blueprint.md`](docs/concierge-operator-blueprint.md) | Operator-level concierge capabilities and affordance design |
+| [`concierge-production-runbook.md`](docs/concierge-production-runbook.md) | Provider setup, diagnostics, guardrails, and booking webhook config |
+| [`concierge-qa-report.md`](docs/concierge-qa-report.md) | Scenario matrix, regression coverage, and known verification gaps |
+| [`concierge-query-evaluation-2026-06-12.md`](docs/concierge-query-evaluation-2026-06-12.md) | Concierge query evaluation results and findings |
 
-## License And Usage
+---
+
+## License
 
 No open-source license is currently included. Treat this repository as source-available project documentation unless a license is added.
